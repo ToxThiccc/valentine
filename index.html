@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение для тебя ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;700&display=swap');
+        body { background-color: #fff5f7; font-family: 'Montserrat', sans-serif; overflow: hidden; }
+        .romantic-font { font-family: 'Pacifico', cursive; }
+        #no-btn { position: absolute; transition: all 0.2s ease; }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+
+    <div id="main-card" class="text-center p-8 bg-white rounded-3xl shadow-xl max-w-sm mx-4">
+        <img id="gif" src="https://media.tenor.com/9v8SsyXm9pAAAAAi/milk-mocha.gif" alt="Cute GIF" class="w-48 mx-auto mb-6">
+        
+        <h1 id="question" class="romantic-font text-3xl text-pink-600 mb-8">
+            Любимая, пойдешь со мной на свидание 14 февраля?
+        </h1>
+
+        <div class="flex justify-center gap-4 items-center h-20">
+            <button id="yes-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition active:scale-95">
+                ДА!
+            </button>
+            <button id="no-btn" class="bg-red-500 text-white font-bold py-3 px-8 rounded-full shadow-lg">
+                Нет
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const gif = document.getElementById('gif');
+        const question = document.getElementById('question');
+        let yesSize = 1;
+
+        // Логика убегающей кнопки
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            
+            // Увеличиваем кнопку "Да"
+            yesSize += 0.2;
+            yesBtn.style.transform = scale(${yesSize});
+        }
+
+        // Логика победы
+        yesBtn.addEventListener('click', () => {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff0000', '#ff69b4', '#ffffff'] });
+            
+            document.getElementById('main-card').innerHTML = 
+                <img src="https://media.tenor.com/Z86C908W6AsAAAAi/milk-and-mocha.gif" alt="Happy" class="w-48 mx-auto mb-6">
+                <h1 class="romantic-font text-3xl text-pink-600 mb-4">Ураа! ❤️</h1>
+                <p class="text-gray-600 mb-4">Я уже забронировал столик в твоем любимом месте!</p>
+                <p class="font-bold text-pink-500">Встречаемся в 19:00!</p>
+            ;
+        });
+    </script>
+</body>
+</html>
